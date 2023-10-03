@@ -12,5 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "tesdeploy3"
-include ':app'
+
+rootProject.name = "Scan Object"
+include(":app")
+ 

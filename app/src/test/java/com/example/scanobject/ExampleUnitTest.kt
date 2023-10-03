@@ -1,4 +1,4 @@
-package com.example.tesdeploy3
+package com.example.scanobject
 
 import org.junit.Test
 
