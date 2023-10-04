@@ -13,6 +13,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.SurfaceTexture
 import android.hardware.camera2.CameraCaptureSession
+import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraDevice
 import android.hardware.camera2.CameraManager
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +33,7 @@ import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
+import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity() {
 
@@ -61,8 +63,8 @@ class MainActivity : AppCompatActivity() {
         model = SsdMobilenetV11Metadata1.newInstance(this)
         val  handlerThread = HandlerThread("VideoThread")
         handlerThread.start()
-        handler = Handler(handlerThread.looper)
 
+        handler = Handler(handlerThread.looper)
         imageView = findViewById(R.id.imageView)
 
         textureView = findViewById(R.id.textureView)
@@ -72,6 +74,12 @@ class MainActivity : AppCompatActivity() {
                 width: Int,
                 height: Int
             ) {
+//                val characteristics = cameraManager.getCameraCharacteristics(cameraManager.cameraIdList[0])
+//                val streamConfigurationMap = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+//                val previewSize = streamConfigurationMap!!.getOutputSizes(SurfaceTexture::class.java)[0]
+//
+//                surface.setDefaultBufferSize(previewSize.width, previewSize.height)
+
                 open_camera()
             }
 
@@ -82,6 +90,7 @@ class MainActivity : AppCompatActivity() {
             ) {
 
             }
+
 
             override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
                 return false
@@ -121,11 +130,31 @@ class MainActivity : AppCompatActivity() {
                         paint.style = Paint.Style.FILL
                         canvas.drawText(labels.get(classes.get(index).toInt())+" "+fl.toString(), locations.get(x+1)*w, locations.get(x)*h, paint)
 
+
                     }
                 }
                 imageView.setImageBitmap(mutable)
 
 
+                val resultTextView = findViewById<TextView>(R.id.resultTextView)
+                val resultString = buildResultString(scores, classes)
+
+                runOnUiThread {
+                    resultTextView.text = resultString
+                }
+
+
+            }
+
+            private fun buildResultString(scores: FloatArray?, classes: FloatArray?): CharSequence? {
+                val result = StringBuilder()
+                scores ?.forEachIndexed { index, fl ->
+                    if (fl > 0.5) {
+                        val label = labels[classes?.get(index)!!.toInt()]
+                        result.append("$label: ${fl * 100}%\n")
+                    }
+                }
+                return result.toString()
             }
         }
 
@@ -140,6 +169,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermision")
     fun open_camera(){
+        //permission
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.CAMERA
@@ -186,7 +216,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+// permission
     fun get_permission(){
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) !=PackageManager.PERMISSION_GRANTED){
             requestPermissions(arrayOf(android.Manifest.permission.CAMERA), 101)

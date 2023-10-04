@@ -4,17 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context=".MainActivity">
 
+
+<!--    <EditText-->
+<!--        android:id="@+id/editTextText"-->
+<!--        android:layout_width="151dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginStart="139dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginEnd="125dp"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="text"-->
+<!--        android:text="Detection Object" />-->
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="203dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="196dp"
+        android:text="Belajar Deploy"
+        android:textSize="20dp" />
+
     <TextureView
+        android:id="@+id/textureView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/textureView"/>
+        android:layout_height="530dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="255dp" />
+
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#000"
-        android:id="@+id/imageView"/>
+        android:layout_height="537dp"
+        android:layout_alignTop="@+id/textureView"
+        android:layout_alignBottom="@+id/textureView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="-8dp"
+        android:background="#000" />
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:textColor="#FFF"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>
