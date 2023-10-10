@@ -8,6 +8,7 @@ _________________
 
 Device test menggunakan xiaomi redmi note 8
 
+![Image Hasil](/test3.jpg)
 
 ![Image Hasil](/test.jpg)
 
